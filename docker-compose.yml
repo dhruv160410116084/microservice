@@ -1,7 +1,7 @@
 version: '3'
 services:
   user_service:
-    build: ./user_service
+    image: dhruvpatel33343/microservice_user_service
     ports:
       - "5001:5001"
     environment:
@@ -19,7 +19,8 @@ services:
           - node.labels.role == manager
 
   product_service:
-    build: ./product_service
+    # build: ./product_service
+    image: dhruvpatel33343/microservice_product_service
     ports:
       - "5002:5002"
     environment:
@@ -37,7 +38,8 @@ services:
           - node.labels.role == worker
 
   order_service:
-    build: ./order_service
+    # build: ./order_service
+    image: dhruvpatel33343/microservice_order_service
     ports:
       - "5003:5003"
     environment:
