@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, request
 import psycopg2
 import os
 import time
 
 app = Flask(__name__)
 
+# PostgreSQL configurations from environment variables
 DATABASE_HOST = os.getenv('DATABASE_HOST', 'postgres')
 DATABASE_PORT = os.getenv('DATABASE_PORT', 5432)
 DATABASE_USER = os.getenv('DATABASE_USER', 'user')
@@ -31,24 +32,22 @@ def connect_to_db(retries=5, delay=5):
 
 conn = connect_to_db()
 
-@app.route('/')
-def index():
+@app.route('/products', methods=['GET'])
+def get_products():
     cur = conn.cursor()
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
     cur.close()
-    return render_template('index.html', products=products)
+    return jsonify(products)
 
-@app.route('/add_product', methods=['POST'])
-def add_product():
-    product_id = request.form['id']
-    name = request.form['name']
-    price = request.form['price']
+@app.route('/products', methods=['POST'])
+def create_product():
+    product = request.json
     cur = conn.cursor()
-    cur.execute("INSERT INTO products (id, name, price) VALUES (%s, %s, %s)", (product_id, name, price))
+    cur.execute("INSERT INTO products (id, name, price) VALUES (%s, %s, %s)", (product['id'], product['name'], product['price']))
     conn.commit()
     cur.close()
-    return redirect(url_for('index'))
+    return jsonify(product), 201
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002)

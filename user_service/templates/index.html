@@ -3,26 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
+    <title>User Service</title>
 </head>
 <body>
-    <h1>Users</h1>
-    <ul id="user-list">
+    <h1>User Service</h1>
+    <h2>Users</h2>
+    <ul>
         {% for user in users %}
             <li>ID: {{ user[0] }}, Name: {{ user[1] }}</li>
         {% endfor %}
     </ul>
+
     <h2>Add User</h2>
-    <form action="/add_user" method="post">
-        <input type="text" name="id" placeholder="ID" required>
-        <input type="text" name="name" placeholder="Name" required>
+    <form action="/create_user" method="post">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
         <button type="submit">Add User</button>
     </form>
 
-    <h2>Navigate to Other Services</h2>
-    <ul>
-        <li><a href="http://localhost:5002">Product Service</a></li>
-        <li><a href="http://localhost:5003">Order Service</a></li>
-    </ul>
+    <h2>Products</h2>
+    <a href="/products">View Products</a>
+    <h2>Add Product</h2>
+    <form action="/add_product" method="post">
+        <label for="product_id">Product ID:</label>
+        <input type="text" id="product_id" name="id" required>
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="name" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Orders</h2>
+    <a href="/orders">View Orders</a>
+    <h2>Add Order</h2>
+    <form action="/add_order" method="post">
+        <label for="order_id">Order ID:</label>
+        <input type="text" id="order_id" name="id" required>
+        <label for="order_description">Order Description:</label>
+        <input type="text" id="order_description" name="description" required>
+        <button type="submit">Add Order</button>
+    </form>
 </body>
 </html>

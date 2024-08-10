@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, request
 import psycopg2
 import os
+import requests
 import time
 
 app = Flask(__name__)
 
+# PostgreSQL configurations from environment variables
 DATABASE_HOST = os.getenv('DATABASE_HOST', 'postgres')
 DATABASE_PORT = os.getenv('DATABASE_PORT', 5432)
 DATABASE_USER = os.getenv('DATABASE_USER', 'user')
@@ -31,23 +33,26 @@ def connect_to_db(retries=5, delay=5):
 
 conn = connect_to_db()
 
-@app.route('/')
-def index():
+@app.route('/orders', methods=['GET'])
+def get_orders():
     cur = conn.cursor()
     cur.execute("SELECT * FROM orders")
     orders = cur.fetchall()
     cur.close()
-    return render_template('index.html', orders=orders)
+    return jsonify(orders)
 
-@app.route('/create_order', methods=['POST'])
+@app.route('/orders', methods=['POST'])
 def create_order():
-    product_id = request.form['product_id']
-    quantity = request.form['quantity']
-    cur = conn.cursor()
-    cur.execute("INSERT INTO orders (product_id, quantity) VALUES (%s, %s)", (product_id, quantity))
-    conn.commit()
-    cur.close()
-    return redirect(url_for('index'))
+    order = request.json
+    user = requests.get(f'http://user_service:5001/users/{order["user_id"]}').json()
+    product = requests.get(f'http://product_service:5002/products/{order["product_id"]}').json()
+    if user and product:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO orders (user_id, product_id, quantity) VALUES (%s, %s, %s)", (order['user_id'], order['product_id'], order['quantity']))
+        conn.commit()
+        cur.close()
+        return jsonify(order), 201
+    return jsonify({"error": "Invalid user or product"}), 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5003)
