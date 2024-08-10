@@ -1,0 +1,77 @@
+version: '3'
+services:
+  user_service:
+    build: ./user_service
+    ports:
+      - "5001:5001"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=user_db
+    depends_on:
+      - postgres
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == manager
+
+  product_service:
+    build: ./product_service
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=product_db
+    depends_on:
+      - postgres
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == worker
+
+  order_service:
+    build: ./order_service
+    ports:
+      - "5003:5003"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=order_db
+    depends_on:
+      - postgres
+      - user_service
+      - product_service
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == worker
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecommerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == worker
+
+volumes:
+  pgdata:

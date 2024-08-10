@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <ul id="product-list">
+        {% for product in products %}
+            <li>ID: {{ product[0] }}, Name: {{ product[1] }}, Price: {{ product[2] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Add Product</h2>
+    <form action="/add_product" method="post">
+        <input type="text" name="id" placeholder="ID" required>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="price" placeholder="Price" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Navigate to Other Services</h2>
+    <ul>
+        <li><a href="http://localhost:5001">User Service</a></li>
+        <li><a href="http://localhost:5003">Order Service</a></li>
+    </ul>
+</body>
+</html>
