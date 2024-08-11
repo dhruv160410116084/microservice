@@ -77,3 +77,10 @@ services:
 
 volumes:
   pgdata:
+
+
+# docker tag microservice_order_service dhruvpatel33343/microservice_order_service
+# docker tag microservice_user_service dhruvpatel33343/microservice_user_service
+# docker tag microservice_product_service dhruvpatel33343/microservice_product_service
+# docker stack rm ecomm
+# docker stack deploy -c docker-compose.yml ecomm

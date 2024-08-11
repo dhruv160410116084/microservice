@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: DATABASE_HOST
+              value: "{{ .Values.env.DATABASE_HOST }}"
+            - name: DATABASE_PORT
+              value: "{{ .Values.env.DATABASE_PORT }}"
+            - name: DATABASE_USER
+              value: "{{ .Values.env.DATABASE_USER }}"
+            - name: DATABASE_PASSWORD
+              value: "{{ .Values.env.DATABASE_PASSWORD }}"
+            - name: DATABASE_NAME
+              value: "{{ .Values.env.DATABASE_NAME }}"

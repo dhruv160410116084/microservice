@@ -19,6 +19,7 @@ kubectl delete deployments --all
 kubectl delete services --all 
 kubectl delete pvc --all 
 kubectl delete pv --all
+kubectl delete configmaps postgres-init-script
 
 kubectl apply -f user_service/configmap.yaml
 kubectl apply -f user_service/postgre-pvc-claim.yaml
@@ -26,3 +27,12 @@ kubectl apply -f user_service/deployment-postgresql.yaml
 kubectl apply -f user_service/deployment.yaml
 kubectl apply -f product_service/deployment.yaml
 kubectl apply -f order_service/deployment.yaml
+
+
+helm upgrade --install postgres ./user_service/postgres/ --namespace default
+helm upgrade --install user-service ./user_service/user-service/ --namespace default
+helm upgrade --install product-service ./product_service/product-service/ --namespace default
+helm upgrade --install order-service ./order_service/order-service/ --namespace default
+
+
+

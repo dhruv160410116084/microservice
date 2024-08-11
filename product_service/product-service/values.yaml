@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: dhruvpatel33343/microservice_product_service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5002
+
+env:
+  DATABASE_HOST: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "user"
+  DATABASE_PASSWORD: "password"
+  DATABASE_NAME: "product_db"
+
+resources: {}

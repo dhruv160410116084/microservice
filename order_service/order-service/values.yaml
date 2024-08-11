@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: dhruvpatel33343/microservice_order_service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5003
+
+env:
+  DATABASE_HOST: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "user"
+  DATABASE_PASSWORD: "password"
+  DATABASE_NAME: "order_db"
+  PRODUCT_SERVICE_URL: "http://product-service:5002/products"
+  USER_SERVICE_URL: "http://user-service:5001/users"
+
+resources: {}

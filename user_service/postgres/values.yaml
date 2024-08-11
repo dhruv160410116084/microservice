@@ -1,0 +1,23 @@
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  name: ""
+  
+image:
+  repository: postgres
+  tag: 13
+  pullPolicy: IfNotPresent
+
+postgresUser: user
+postgresPassword: password
+postgresDatabase: ecommerce
+
+service:
+  type: ClusterIP
+  port: 5432
+
+resources: {}
+
+persistence:
+  enabled: false  # Set to false if you don't want to use Persistent Volumes

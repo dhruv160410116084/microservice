@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: dhruvpatel33343/microservice_user_service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 5001
+
+env:
+  DATABASE_HOST: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "user"
+  DATABASE_PASSWORD: "password"
+  DATABASE_NAME: "user_db"
+  PRODUCT_SERVICE_URL: "http://product-service:5002/products"
+  ORDER_SERVICE_URL: "http://order-service:5003/orders"
+
+resources: {}
