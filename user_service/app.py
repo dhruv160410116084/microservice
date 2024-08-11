@@ -82,7 +82,8 @@ def add_order():
     order = request.form
     response = requests.post(ORDER_SERVICE_URL, json={
         'id': order['id'],
-        'description': order['description']
+        'product_id': order['product_id'],
+        'quantity': order['quantity']
     })
     return jsonify({"status": response.json().get("status")}), response.status_code
 
