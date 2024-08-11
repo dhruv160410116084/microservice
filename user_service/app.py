@@ -16,13 +16,25 @@ DATABASE_NAME = os.getenv('DATABASE_NAME', 'user_db')
 PRODUCT_SERVICE_URL = os.getenv('PRODUCT_SERVICE_URL', 'http://product_service:5002/products')
 ORDER_SERVICE_URL = os.getenv('ORDER_SERVICE_URL', 'http://order_service:5003/orders')
 
-conn = psycopg2.connect(
-    host=DATABASE_HOST,
-    port=DATABASE_PORT,
-    user=DATABASE_USER,
-    password=DATABASE_PASSWORD,
-    dbname=DATABASE_NAME
-)
+def connect_to_db(retries=5, delay=5):
+    while retries > 0:
+        try:
+            conn = psycopg2.connect(
+                host=DATABASE_HOST,
+                port=DATABASE_PORT,
+                user=DATABASE_USER,
+                password=DATABASE_PASSWORD,
+                dbname=DATABASE_NAME
+            )
+            print("Connected to the database")
+            return conn
+        except psycopg2.OperationalError as e:
+            print(f"Database connection failed: {e}")
+            retries -= 1
+            time.sleep(delay)
+    raise Exception("Failed to connect to the database after several attempts.")
+
+conn = connect_to_db()
 
 @app.route('/')
 def index():
