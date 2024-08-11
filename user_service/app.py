@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, render_template
 import psycopg2
 import os
 import requests
+import time
 
 app = Flask(__name__)
 
