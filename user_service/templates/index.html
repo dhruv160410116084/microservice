@@ -30,7 +30,9 @@
         <label for="product_id">Product ID:</label>
         <input type="text" id="product_id" name="id" required>
         <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="name" required>
+        <input type="text" id="product_id" name="id" required>
+        <label for="product_price">Product Price</label>
+        <input type="text" id="product_price" name="price" required>
         <button type="submit">Add Product</button>
     </form>
 
@@ -38,10 +40,15 @@
     <a href="/orders">View Orders</a>
     <h2>Add Order</h2>
     <form action="/add_order" method="post">
-        <label for="order_id">Order ID:</label>
-        <input type="text" id="order_id" name="id" required>
-        <label for="order_description">Order Description:</label>
-        <input type="text" id="order_description" name="description" required>
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="id" required>
+        
+        <label for="product_id">product ID:</label>
+        <input type="text" id="product_id" name="product_id" required>
+
+        <label for="quantity">product ID:</label>
+        <input type="text" id="quantity" name="quantity" required>
+
         <button type="submit">Add Order</button>
     </form>
 </body>
