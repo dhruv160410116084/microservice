@@ -71,7 +71,9 @@ def add_product():
     product = request.form
     response = requests.post(PRODUCT_SERVICE_URL, json={
         'id': product['id'],
-        'name': product['name']
+        'name': product['name'],
+        'price': product['price'],
+
     })
     return jsonify({"status": response.json().get("status")}), response.status_code
 
