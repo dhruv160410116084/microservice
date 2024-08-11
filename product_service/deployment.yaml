@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: dhruvpatel33343/microservice_product_service:latest
+        ports:
+        - containerPort: 5002
+        env:
+        - name: DATABASE_HOST
+          value: "postgres"
+        - name: DATABASE_PORT
+          value: "5432"
+        - name: DATABASE_USER
+          value: "user"
+        - name: DATABASE_PASSWORD
+          value: "password"
+        - name: DATABASE_NAME
+          value: "product_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: default
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002

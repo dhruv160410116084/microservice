@@ -9,7 +9,7 @@
     <h1>Order List</h1>
     <ul>
         {% for order in orders %}
-            <li>ID: {{ order[0] }}, Description: {{ order[1] }}</li>
+            <li>ID: {{ order[0] }}, user id: {{ order[1] }}, product id: {{ order[2] }} quantity: {{ order[3] }}</li>
         {% endfor %}
     </ul>
     <a href="/">Back to User Service</a>

@@ -32,6 +32,18 @@ def connect_to_db(retries=5, delay=5):
 
 conn = connect_to_db()
 
+@app.route('/products/<int:product_id>', methods=['GET'])
+def get_product(product_id):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM products WHERE id = %s", (product_id,))
+    product = cur.fetchone()
+    cur.close()
+    if product:
+        return jsonify({"id": product[0], "name": product[1]}), 200
+    else:
+        return jsonify({"error": "Product not found"}), 404
+
+
 @app.route('/products', methods=['GET'])
 def get_products():
     cur = conn.cursor()

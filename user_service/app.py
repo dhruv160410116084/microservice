@@ -54,6 +54,18 @@ def create_user():
     cur.close()
     return jsonify({"status": "User created"}), 201
 
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    user = cur.fetchone()
+    cur.close()
+    if user:
+        return jsonify({"id": user[0], "name": user[1]}), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+
 @app.route('/products')
 def list_products():
     response = requests.get(PRODUCT_SERVICE_URL)
