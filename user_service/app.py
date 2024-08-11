@@ -81,7 +81,7 @@ def add_product():
 def add_order():
     order = request.form
     response = requests.post(ORDER_SERVICE_URL, json={
-        'id': order['id'],
+        'user_id': order['user_id'],
         'product_id': order['product_id'],
         'quantity': order['quantity']
     })
