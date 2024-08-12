@@ -4,9 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>User Service</h1>
+    
     <h2>Users</h2>
     <ul>
         {% for user in users %}
@@ -25,28 +92,30 @@
 
     <h2>Products</h2>
     <a href="/products">View Products</a>
+    
     <h2>Add Product</h2>
     <form action="/add_product" method="post">
         <label for="product_id">Product ID:</label>
         <input type="text" id="product_id" name="id" required>
         <label for="product_name">Product Name:</label>
         <input type="text" id="product_name" name="name" required>
-        <label for="product_price">Product Price</label>
+        <label for="product_price">Product Price:</label>
         <input type="text" id="product_price" name="price" required>
         <button type="submit">Add Product</button>
     </form>
 
     <h2>Orders</h2>
     <a href="/orders">View Orders</a>
+    
     <h2>Add Order</h2>
     <form action="/add_order" method="post">
         <label for="user_id">User ID:</label>
         <input type="text" id="user_id" name="user_id" required>
         
-        <label for="product_id">product ID:</label>
+        <label for="product_id">Product ID:</label>
         <input type="text" id="product_id" name="product_id" required>
 
-        <label for="quantity">quantity:</label>
+        <label for="quantity">Quantity:</label>
         <input type="text" id="quantity" name="quantity" required>
 
         <button type="submit">Add Order</button>

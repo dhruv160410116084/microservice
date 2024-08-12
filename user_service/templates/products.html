@@ -4,12 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2196F3;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #1976D2;
+        }
+    </style>
 </head>
 <body>
     <h1>Product List</h1>
     <ul>
         {% for product in products %}
-            <li>ID: {{ product[0] }}, Name: {{ product[1] }}</li>
+            <li>ID: {{ product[0] }}, Name: {{ product[1] }}, Price: {{ product[2] }}</li>
         {% endfor %}
     </ul>
     <a href="/">Back to User Service</a>

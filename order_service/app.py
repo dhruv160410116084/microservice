@@ -59,7 +59,8 @@ def create_order():
         cur.execute("INSERT INTO orders (user_id, product_id, quantity) VALUES (%s, %s, %s)", (order['user_id'], order['product_id'], order['quantity']))
         conn.commit()
         cur.close()
-        return jsonify({'success':'true'}), 201
+        return jsonify({"status": "Order created"}), 201
+
     
     return jsonify({"error": "Invalid user or product"}), 400
 

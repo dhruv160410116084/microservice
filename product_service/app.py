@@ -59,7 +59,8 @@ def create_product():
     cur.execute("INSERT INTO products (id, name, price) VALUES (%s, %s, %s)", (product['id'], product['name'], product['price']))
     conn.commit()
     cur.close()
-    return jsonify({'success':'true'}), 201
+    return jsonify({"status": "Product created"}), 201
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002)
