@@ -4,12 +4,15 @@ docker-compose down -v
 docker swarm init #manager node
 docker swarm join --token SWMTKN-1-xxxxxxxxx <manager-ip>:2377 # worker node
 
-docker node update --label-add role=manager aflu8t9b8i445qfz4usull7sd
-docker node update --label-add role=worker x7i6lbnu5hztckury7uyg3cf6
+docker node update --label-add role=manager cw7pyk968k9vz19ok1czqibca
+docker node update --label-add role=worker mt4ffozklqdixo20tp553q933
 docker node ls
 
 git clone https://github.com/dhruv160410116084/microservice
 git pull
+docker tag microservice_order_service dhruvpatel33343/microservice_order_service
+docker tag microservice_user_service dhruvpatel33343/microservice_user_service
+docker tag microservice_product_service dhruvpatel33343/microservice_product_service
 docker build -t dhruvpatel33343/microservice_user_service:latest ./user_service
 docker build -t dhruvpatel33343/microservice_product_service:latest ./product_service
 docker build -t dhruvpatel33343/microservice_order_service:latest ./order_service
@@ -45,6 +48,13 @@ helm upgrade --install user-service ./user_service/user-service/ --namespace def
 helm upgrade --install product-service ./product_service/product-service/ --namespace default
 helm upgrade --install order-service ./order_service/order-service/ --namespace default
 
+helm ls -A
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc argocd-server -n argocd
+ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=”{.data.password}”
 
 argocd login 34.136.107.14 --username admin --password vig3SIKZbfznM1Xi
 
